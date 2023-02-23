@@ -9,7 +9,6 @@ require (
 	github.com/golang/protobuf v1.3.4
 	github.com/google/cel-go v0.6.0
 	github.com/hirochachacha/go-smb2 v1.1.0
-	github.com/huin/asn1ber v0.0.0-20120622192748-af09f62e6358 // indirect
 	github.com/jlaffaye/ftp v0.0.0-20220630165035-11536801d1ff
 	github.com/lib/pq v1.10.6
 	github.com/satori/go.uuid v1.2.0
@@ -22,6 +21,30 @@ require (
 	google.golang.org/genproto v0.0.0-20200416231807-8751e049a2a0
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
+)
+
+require (
+	github.com/BurntSushi/toml v0.3.1 // indirect
+	github.com/antlr/antlr4 v0.0.0-20200503195918-621b933c7a7f // indirect
+	github.com/geoffgarside/ber v1.1.0 // indirect
+	github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe // indirect
+	github.com/golang-sql/sqlexp v0.1.0 // indirect
+	github.com/hashicorp/errwrap v1.0.0 // indirect
+	github.com/hashicorp/go-multierror v1.1.1 // indirect
+	github.com/huin/asn1ber v0.0.0-20120622192748-af09f62e6358 // indirect
+	github.com/icodeface/tls v0.0.0-20190904083142-17aec93c60e5 // indirect
+	github.com/lunixbochs/struc v0.0.0-20200707160740-784aaebc1d40 // indirect
+	go.uber.org/atomic v1.5.0 // indirect
+	go.uber.org/multierr v1.3.0 // indirect
+	go.uber.org/tools v0.0.0-20190618225709-2cfd321de3ee // indirect
+	go.uber.org/zap v1.14.0 // indirect
+	golang.org/x/lint v0.0.0-20190930215403-16217165b5de // indirect
+	golang.org/x/mod v0.3.0 // indirect
+	golang.org/x/sys v0.0.0-20210423082822-04245dca01da // indirect
+	golang.org/x/tools v0.1.0 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
+	google.golang.org/grpc v1.27.1 // indirect
+	honnef.co/go/tools v0.0.1-2019.2.3 // indirect
 )
 
 replace github.com/tomatome/grdp v0.0.0-20211231062539-be8adab7eaf3 => github.com/shadow1ng/grdp v1.0.3

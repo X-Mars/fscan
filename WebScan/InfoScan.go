@@ -2,6 +2,7 @@ package WebScan
 
 import (
 	"crypto/md5"
+	"encoding/json"
 	"fmt"
 	"github.com/shadow1ng/fscan/WebScan/info"
 	"github.com/shadow1ng/fscan/common"
@@ -38,8 +39,20 @@ func InfoCheck(Url string, CheckData *[]CheckDatas) []string {
 	infoname = removeDuplicateElement(infoname)
 
 	if len(infoname) > 0 {
-		result := fmt.Sprintf("[+] InfoScan:%-25v %s ", Url, infoname)
-		common.LogSuccess(result)
+		//result := fmt.Sprintf("[+] InfoScan:%-25v %s ", Url, infoname)
+		//common.LogSuccess(result)
+
+		data := map[string]interface{}{
+			"type":  "InfoScan",
+			"url":   Url,
+			"title": infoname,
+		}
+		b, err := json.Marshal(data)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		common.LogSuccess(string(b))
+
 		return infoname
 	}
 	return []string{""}

@@ -2,6 +2,7 @@ package lib
 
 import (
 	"crypto/md5"
+	"encoding/json"
 	"fmt"
 	"github.com/google/cel-go/cel"
 	"github.com/shadow1ng/fscan/WebScan/info"
@@ -341,6 +342,22 @@ func clusterpoc(oReq *http.Request, p *Poc, variableMap map[string]interface{}, 
 				strMap = append(strMap, tmpMap...)
 				if i == len(p.Rules)-1 {
 					common.LogSuccess(fmt.Sprintf("[+] %s://%s%s %s %v", req.Url.Scheme, req.Url.Host, req.Url.Path, p.Name, strMap))
+
+					data := map[string]interface{}{
+						"type":    "Poc",
+						"host":    req.Url.Host,
+						"port":    req.Url.Port,
+						"scheme":  req.Url.Scheme,
+						"path":    req.Url.Path,
+						"pocName": p.Name,
+						"name":    strMap,
+					}
+					b, err := json.Marshal(data)
+					if err != nil {
+						fmt.Println("error:", err)
+					}
+					common.LogSuccess(string(b))
+
 					//防止后续继续打印poc成功信息
 					return false, nil
 				}

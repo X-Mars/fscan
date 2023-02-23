@@ -3,6 +3,7 @@ package Plugins
 import (
 	"compress/gzip"
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"github.com/shadow1ng/fscan/WebScan"
 	"github.com/shadow1ng/fscan/WebScan/lib"
@@ -156,7 +157,24 @@ func geturl(info *common.HostInfo, flag int, CheckData []WebScan.CheckDatas) (er
 		if reurl != "" {
 			result += fmt.Sprintf(" 跳转url: %s", reurl)
 		}
-		common.LogSuccess(result)
+		data := map[string]interface{}{
+			"type":     "WebTitle",
+			"title":    title,
+			"scheme":   resp.Request.URL.Scheme,
+			"port":     resp.Request.URL.Port(),
+			"host":     resp.Request.URL.Host,
+			"path":     resp.Request.URL.Path,
+			"code":     resp.StatusCode,
+			"len":      length,
+			"redirURL": reurl,
+		}
+		b, err := json.Marshal(data)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		//fmt.Println(string(b))
+		//common.LogSuccess(result)
+		common.LogSuccess(string(b))
 	}
 	if reurl != "" {
 		return nil, reurl, CheckData

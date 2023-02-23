@@ -2,6 +2,7 @@ package Plugins
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"github.com/shadow1ng/fscan/common"
 	"net"
@@ -112,12 +113,39 @@ func RedisUnauth(info *common.HostInfo) (flag bool, err error) {
 		flag = true
 		dbfilename, dir, err = getconfig(conn)
 		if err != nil {
-			result := fmt.Sprintf("[+] Redis:%s unauthorized", realhost)
-			common.LogSuccess(result)
+			//b := fmt.Sprintf("[+] Redis:%s unauthorized", realhost)
+
+			data := map[string]interface{}{
+				"type":  "Redis",
+				"host":  info.Host,
+				"port":  info.Ports,
+				"title": "unauthorized",
+			}
+			b, err := json.MarshalIndent(data, "", "  ")
+			if err != nil {
+				fmt.Println("error:", err)
+			}
+			common.LogSuccess(string(b))
+
 			return flag, err
 		} else {
-			result := fmt.Sprintf("[+] Redis:%s unauthorized file:%s/%s", realhost, dir, dbfilename)
-			common.LogSuccess(result)
+			//result := fmt.Sprintf("[+] Redis:%s unauthorized file:%s/%s", realhost, dir, dbfilename)
+			//common.LogSuccess(result)
+
+			data := map[string]interface{}{
+				"type":  "Redis",
+				"host":  info.Host,
+				"port":  info.Ports,
+				"title": "unauthorized",
+				"dir":   dir,
+				"file":  dbfilename,
+			}
+			b, err := json.Marshal(data)
+			if err != nil {
+				fmt.Println("error:", err)
+			}
+			common.LogSuccess(string(b))
+
 		}
 		err = Expoilt(realhost, conn)
 	}

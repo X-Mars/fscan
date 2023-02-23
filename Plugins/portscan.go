@@ -1,6 +1,7 @@
 package Plugins
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/shadow1ng/fscan/common"
 	"sort"
@@ -81,8 +82,22 @@ func PortConnect(addr Addr, respondingHosts chan<- string, adjustedTimeout int64
 	}()
 	if err == nil {
 		address := host + ":" + strconv.Itoa(port)
-		result := fmt.Sprintf("%s open", address)
-		common.LogSuccess(result)
+		//result := fmt.Sprintf("%s open", address)
+		//common.LogSuccess(result)
+
+		data := map[string]interface{}{
+			"type":   "Port",
+			"host":   host,
+			"port":   port,
+			"status": "open",
+			"title":  "open",
+		}
+		b, err := json.Marshal(data)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		common.LogSuccess(string(b))
+
 		wg.Add(1)
 		respondingHosts <- address
 	}
