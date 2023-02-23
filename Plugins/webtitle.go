@@ -162,7 +162,7 @@ func geturl(info *common.HostInfo, flag int, CheckData []WebScan.CheckDatas) (er
 			"title":    title,
 			"scheme":   resp.Request.URL.Scheme,
 			"port":     resp.Request.URL.Port(),
-			"host":     resp.Request.URL.Host,
+			"host":     resp.Request.URL.Hostname(),
 			"path":     resp.Request.URL.Path,
 			"code":     resp.StatusCode,
 			"len":      length,

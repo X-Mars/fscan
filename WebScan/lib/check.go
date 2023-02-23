@@ -34,8 +34,23 @@ func CheckMultiPoc(req *http.Request, pocs []*Poc, workers int) {
 			for task := range tasks {
 				isVul, _, name := executePoc(task.Req, task.Poc)
 				if isVul {
-					result := fmt.Sprintf("[+] %s %s %s", task.Req.URL, task.Poc.Name, name)
-					common.LogSuccess(result)
+					//result := fmt.Sprintf("[+] %s %s %s", task.Req.URL, task.Poc.Name, name)
+					//common.LogSuccess(result)
+
+					data := map[string]interface{}{
+						"type":    "Poc",
+						"host":    task.Req.URL.Hostname(),
+						"port":    task.Req.URL.Port(),
+						"scheme":  task.Req.URL.Scheme,
+						"path":    task.Req.URL.Path,
+						"pocName": task.Poc.Name,
+						"name":    name,
+					}
+					b, err := json.Marshal(data)
+					if err != nil {
+						fmt.Println("error:", err)
+					}
+					common.LogSuccess(string(b))
 				}
 				wg.Done()
 			}
@@ -341,11 +356,11 @@ func clusterpoc(oReq *http.Request, p *Poc, variableMap map[string]interface{}, 
 				}
 				strMap = append(strMap, tmpMap...)
 				if i == len(p.Rules)-1 {
-					common.LogSuccess(fmt.Sprintf("[+] %s://%s%s %s %v", req.Url.Scheme, req.Url.Host, req.Url.Path, p.Name, strMap))
+					//common.LogSuccess(fmt.Sprintf("[+] %s://%s%s %s %v", req.Url.Scheme, req.Url.Host, req.Url.Path, p.Name, strMap))
 
 					data := map[string]interface{}{
 						"type":    "Poc",
-						"host":    req.Url.Host,
+						"host":    req.Url.GetDomain(),
 						"port":    req.Url.Port,
 						"scheme":  req.Url.Scheme,
 						"path":    req.Url.Path,
